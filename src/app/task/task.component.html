@@ -1,0 +1,23 @@
+<div class="task" *ngFor="let task of tasks; let i = index;">
+  <div class="hour">
+      <input [(ngModel)]="task.hour" [disabled]="isDisabled(i)" [ngxTimepicker]="picker" [format]="24" placeholder="Hour" class="time">
+      <ngx-material-timepicker #picker></ngx-material-timepicker>
+  </div>
+  <div class="wrap">
+    <div *ngIf="isDisabled(i) else inputs">
+      <h2>{{ task.title }}</h2>
+      <p>{{ task.text }}</p>
+    </div>
+    <ng-template #inputs>
+    <input [(ngModel)]="task.title" [disabled]="isDisabled(i)" placeholder="Task title">
+    <textarea [(ngModel)]="task.text" [disabled]="isDisabled(i)" placeholder="Write something about it"></textarea>
+    </ng-template>
+    <nav *ngIf="isDisabled(i) else saveButton">
+      <button (click)="edit(i)" class="edit"><mat-icon>edit</mat-icon></button>
+      <button (click)="delete(i)" class="delete"><mat-icon>delete</mat-icon></button>
+    </nav>
+    <ng-template #saveButton>
+        <button (click)="save(i)" class="save">SAVE</button>
+    </ng-template>
+  </div>
+</div>
